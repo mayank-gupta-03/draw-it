@@ -5,6 +5,10 @@ declare global {
     interface Request {
       userId?: string;
     }
+
+    interface Response {
+      success: <T>(statusCode: number, data: T) => void;
+    }
   }
 }
 

@@ -17,11 +17,5 @@ export const loginUser = asyncHandler(async (req: Request, res: Response) => {
   }
   const { username, password } = reqBody.data;
   const token = jwt.sign({ userId: username }, JWT_SECRET);
-  res.status(200).json({
-    success: true,
-    data: {
-      token,
-    },
-  });
-  return;
+  res.success(200, { token });
 });
