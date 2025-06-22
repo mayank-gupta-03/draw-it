@@ -16,7 +16,7 @@ datasource db {
 
 model Users {
   id       String  @id @default(cuid())
-  username String
+  username String  @unique
   password String
   name     String
   image    String?
