@@ -25,7 +25,7 @@ export const loginUser = asyncHandler(async (req: Request, res: Response) => {
   if (!user) throw new ApiError("No user exists with this username", 404);
   const isPasswordValid = await bcrypt.compare(password, user.password);
   if (!isPasswordValid) throw new ApiError("Invalid credentials", 401);
-  const token = jwt.sign({ userId: username }, JWT_SECRET);
+  const token = jwt.sign({ userId: user.id }, JWT_SECRET);
   res.success(200, { token });
 });
 
