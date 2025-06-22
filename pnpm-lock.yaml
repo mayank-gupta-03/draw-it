@@ -92,6 +92,12 @@ importers:
         specifier: 5.8.2
         version: 5.8.2
 
+  apps/ws-backend:
+    devDependencies:
+      '@repo/typescript-config':
+        specifier: workspace:*
+        version: link:../../packages/typescript-config
+
   packages/common:
     dependencies:
       zod:
