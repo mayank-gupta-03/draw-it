@@ -19,7 +19,7 @@ model Users {
   username String
   password String
   name     String
-  image    String
+  image    String?
   Rooms    Rooms[]
   Chats    Chats[]
 }
