@@ -4,6 +4,8 @@ import { LoginUserRequestBody } from "@repo/common/types";
 import jwt from "jsonwebtoken";
 import ApiError from "../utils/ApiError.util";
 import { JWT_SECRET } from "@repo/common/config";
+import bcrypt from "bcryptjs";
+import { prisma } from "@repo/db/client";
 
 export const loginUser = asyncHandler(async (req: Request, res: Response) => {
   if (!JWT_SECRET)
@@ -16,6 +18,10 @@ export const loginUser = asyncHandler(async (req: Request, res: Response) => {
     throw new ApiError(errorMessage, 400);
   }
   const { username, password } = reqBody.data;
+  let user = await prisma.users.findFirst({ where: { username } });
+  if (!user) throw new ApiError("No user exists with this username", 404);
+  const isPasswordValid = await bcrypt.compare(password, user.password);
+  if (!isPasswordValid) throw new ApiError("Invalid credentials", 401);
   const token = jwt.sign({ userId: username }, JWT_SECRET);
   res.success(200, { token });
 });

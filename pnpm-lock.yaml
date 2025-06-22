@@ -39,6 +39,9 @@ importers:
       '@repo/common':
         specifier: workspace:*
         version: link:../../packages/common
+      '@repo/db':
+        specifier: workspace:*
+        version: link:../../packages/db
       '@repo/typescript-config':
         specifier: workspace:*
         version: link:../../packages/typescript-config
@@ -111,6 +114,9 @@ importers:
       '@repo/typescript-config':
         specifier: workspace:*
         version: link:../typescript-config
+      '@types/node':
+        specifier: ^22.15.3
+        version: 22.15.3
       prisma:
         specifier: ^6.10.1
         version: 6.10.1(typescript@5.8.2)
