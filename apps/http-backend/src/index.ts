@@ -1,7 +1,8 @@
 import "dotenv/config";
-import express, { response } from "express";
+import express from "express";
 import cors from "cors";
 import userRoutes from "./routes/user.route";
+import roomRoutes from "./routes/room.route";
 import { API_BASE_URL } from "@repo/common/config";
 import { handleError } from "./middleware/error.middleware";
 import responseHandler from "./middleware/responseHandler.middleware";
@@ -13,6 +14,7 @@ app.use(express.urlencoded({ extended: true, limit: "16kb" }));
 
 app.use(responseHandler);
 app.use(`${API_BASE_URL}/users`, userRoutes);
+app.use(`${API_BASE_URL}/room`, roomRoutes);
 app.use(handleError);
 
 const PORT = process.env.PORT || 8000;
