@@ -31,3 +31,10 @@ export const DeleteRoomParamsSchema = z.object({
 export const GetChatsParamsSchema = z.object({
   roomId: z.string().min(3, "Room name must be at least 3 characters."),
 });
+
+export const GetRoomRequestSchema = z.object({
+  slug: z
+    .string()
+    .min(3, "Room name must be at least 3 characters.")
+    .max(15, "Room name cannot exceed 15 characters."),
+});

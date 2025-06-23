@@ -15,7 +15,7 @@ app.use(express.urlencoded({ extended: true, limit: "16kb" }));
 
 app.use(responseHandler);
 app.use(`${API_BASE_URL}/users`, userRoutes);
-app.use(`${API_BASE_URL}/room`, roomRoutes);
+app.use(`${API_BASE_URL}/rooms`, roomRoutes);
 app.use(`${API_BASE_URL}/chats`, chatRoutes);
 app.use(handleError);
 

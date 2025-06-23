@@ -3,6 +3,7 @@ import asyncHandler from "../utils/asyncHandler.util";
 import {
   CreateRoomRequestBody,
   DeleteRoomParamsSchema,
+  GetRoomRequestSchema,
 } from "@repo/common/api-types";
 import ApiError from "../utils/ApiError.util";
 import { prisma } from "@repo/db/client";
@@ -54,3 +55,25 @@ export const deleteRoom = asyncHandler(async (req: Request, res: Response) => {
   await prisma.rooms.delete({ where: { id: roomId } });
   res.success(200);
 });
+
+export const getRoomBySlug = asyncHandler(
+  async (req: Request, res: Response) => {
+    const reqBody = GetRoomRequestSchema.safeParse(req.body);
+
+    if (!reqBody.success) {
+      const errorMessage = reqBody.error.message;
+      throw new ApiError(errorMessage, 400);
+    }
+
+    const { slug } = reqBody.data;
+
+    const room = await prisma.rooms.findUnique({
+      where: { slug },
+      select: { id: true, slug: true },
+    });
+
+    if (!room) throw new ApiError("No room exists with this slug.", 404);
+
+    res.success(200, room);
+  }
+);
