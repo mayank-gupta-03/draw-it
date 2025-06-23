@@ -19,7 +19,7 @@ class ExtendedWebSocket extends WebSocket {
     this.userId = null;
   }
 
-  closeWithError(code?: number, reason?: string) {
+  closeWithError(code: number, reason?: string) {
     const errorCode = code || 1011;
     const errorMessage = reason || "Internal server error.";
     console.error(`[ERROR] CODE: ${errorCode} MESSAGE: ${errorMessage}`);
