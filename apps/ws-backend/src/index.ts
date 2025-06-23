@@ -14,21 +14,21 @@ const users: UserSocket[] = [];
 
 wss.on("connection", function connection(ws: ExtendedWebSocket, request) {
   if (!request.url) {
-    ws.closeWithError(1008, "Missing URL");
+    ws.close(1008, "Missing URL");
     return;
   }
 
   const token = getQueryParams("token", request.url);
 
   if (!token) {
-    ws.closeWithError(1008, "Invalid URL. No authorization token found.");
+    ws.close(1008, "Invalid URL. No authorization token found.");
     return;
   }
 
   ws.userId = validateToken(token);
 
   if (!ws.userId) {
-    ws.closeWithError(1008, "Authorization header missing or malformed.");
+    ws.close(1008, "Authorization header missing or malformed.");
     return;
   }
 
@@ -42,16 +42,14 @@ wss.on("connection", function connection(ws: ExtendedWebSocket, request) {
       parsedMessage = JSON.parse(data.toString());
     } catch (err) {
       console.error("Error: ", err);
-      ws.closeWithError(1007, "Invalid JSON message received.");
+      ws.close(1007, "Invalid JSON message received.");
       return;
     }
-
-    // const { roomId, type, message } = parsedMessage;
 
     const user = users.find((user) => user.socket === ws);
 
     if (!user) {
-      ws.closeWithError(1008, "No user associated with this socket.");
+      ws.close(1008, "No user associated with this socket.");
       return;
     }
 
@@ -69,8 +67,8 @@ wss.on("connection", function connection(ws: ExtendedWebSocket, request) {
           where: { id: roomId },
         });
       } catch (err) {
-        console.error("Error: ", err);
-        ws.closeWithError(1011, "Internal server error.");
+        console.error("Internal server error: ", err);
+        ws.close(1011, "Internal server error.");
         return;
       }
 

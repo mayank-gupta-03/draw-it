@@ -3,7 +3,7 @@ import asyncHandler from "../utils/asyncHandler.util";
 import {
   CreateRoomRequestBody,
   DeleteRoomParamsSchema,
-} from "@repo/common/types";
+} from "@repo/common/api-types";
 import ApiError from "../utils/ApiError.util";
 import { prisma } from "@repo/db/client";
 

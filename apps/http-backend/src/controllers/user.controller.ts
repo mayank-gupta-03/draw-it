@@ -3,7 +3,7 @@ import asyncHandler from "../utils/asyncHandler.util";
 import {
   CreateUserRequestBody,
   LoginUserRequestBody,
-} from "@repo/common/types";
+} from "@repo/common/api-types";
 import jwt from "jsonwebtoken";
 import ApiError from "../utils/ApiError.util";
 import { JWT_SECRET } from "@repo/common/config";
