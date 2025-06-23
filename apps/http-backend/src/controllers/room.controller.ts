@@ -38,14 +38,14 @@ export const createRoom = asyncHandler(async (req: Request, res: Response) => {
 });
 
 export const deleteRoom = asyncHandler(async (req: Request, res: Response) => {
-  const reqBody = DeleteRoomParamsSchema.safeParse(req.params);
+  const reqParams = DeleteRoomParamsSchema.safeParse(req.params);
 
-  if (!reqBody.success) {
-    const errorMessage = reqBody.error.message;
+  if (!reqParams.success) {
+    const errorMessage = reqParams.error.message;
     throw new ApiError(errorMessage, 400);
   }
 
-  const { roomId } = reqBody.data;
+  const { roomId } = reqParams.data;
 
   const room = await prisma.rooms.findUnique({ where: { id: roomId } });
 

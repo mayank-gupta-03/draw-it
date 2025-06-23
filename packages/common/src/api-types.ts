@@ -27,3 +27,7 @@ export const CreateRoomRequestBody = z.object({
 export const DeleteRoomParamsSchema = z.object({
   roomId: z.string().min(3, "Room name must be at least 3 characters."),
 });
+
+export const GetChatsParamsSchema = z.object({
+  roomId: z.string().min(3, "Room name must be at least 3 characters."),
+});
