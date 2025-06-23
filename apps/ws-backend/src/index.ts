@@ -3,7 +3,6 @@ import "dotenv/config";
 import getQueryParams from "./utils/getQueryParams.util";
 import { PORT } from "./utils/config.util";
 import validateToken from "./utils/validateToken.util";
-import ExtendedWebSocket from "./utils/ExtendedWebSocket.util";
 import { UserSocket } from "./types/types";
 import { prisma } from "@repo/db/client";
 import { ParsedSocketMessage } from "@repo/common/types";
@@ -12,7 +11,7 @@ const wss = new WebSocketServer({ port: PORT });
 
 const users: UserSocket[] = [];
 
-wss.on("connection", function connection(ws: ExtendedWebSocket, request) {
+wss.on("connection", function connection(ws, request) {
   if (!request.url) {
     ws.close(1008, "Missing URL");
     return;
@@ -25,15 +24,15 @@ wss.on("connection", function connection(ws: ExtendedWebSocket, request) {
     return;
   }
 
-  ws.userId = validateToken(token);
+  const userId = validateToken(token);
 
-  if (!ws.userId) {
+  if (!userId) {
     ws.close(1008, "Authorization header missing or malformed.");
     return;
   }
 
   if (!users.find((user) => user.socket === ws))
-    users.push({ userId: ws.userId!, socket: ws, rooms: [] });
+    users.push({ userId: userId!, socket: ws, rooms: [] });
 
   ws.on("message", async function message(data) {
     let parsedMessage: ParsedSocketMessage;
@@ -96,7 +95,7 @@ wss.on("connection", function connection(ws: ExtendedWebSocket, request) {
       const { message, roomId } = parsedMessage;
       try {
         await prisma.chats.create({
-          data: { message, userId: ws.userId!, roomId },
+          data: { message, userId: userId!, roomId },
         });
 
         users.forEach((user) => {
