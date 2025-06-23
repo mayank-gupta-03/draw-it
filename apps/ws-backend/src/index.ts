@@ -3,7 +3,7 @@ import "dotenv/config";
 import getQueryParams from "./utils/getQueryParams.util";
 import { PORT } from "./utils/config.util";
 import validateToken from "./utils/validateToken.util";
-import { ExtendedWebSocket } from "./types/types";
+import ExtendedWebSocket from "./utils/ExtendedWebSocket.util";
 
 const wss = new WebSocketServer({ port: PORT });
 

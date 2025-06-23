@@ -1,1 +1,1 @@
-{"root":["./src/index.ts","./src/utils/closewitherror.util.ts"],"version":"5.8.2"}
+{"root":["./src/index.ts","./src/utils/extendedwebsocket.util.ts","./src/utils/config.util.ts","./src/utils/getqueryparams.util.ts","./src/utils/validatetoken.util.ts"],"version":"5.8.2"}
