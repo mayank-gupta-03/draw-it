@@ -1,10 +1,13 @@
 import { Request, Response } from "express";
 import asyncHandler from "../utils/asyncHandler.util";
-import { CreateRoomRequestBody } from "@repo/common/types";
+import {
+  CreateRoomRequestBody,
+  DeleteRoomParamsSchema,
+} from "@repo/common/types";
 import ApiError from "../utils/ApiError.util";
 import { prisma } from "@repo/db/client";
 
-const createRoom = asyncHandler(async (req: Request, res: Response) => {
+export const createRoom = asyncHandler(async (req: Request, res: Response) => {
   const reqBody = CreateRoomRequestBody.safeParse(req.body);
 
   if (!reqBody.success) {
@@ -24,8 +27,30 @@ const createRoom = asyncHandler(async (req: Request, res: Response) => {
 
   const room = await prisma.rooms.create({
     data: { slug, adminId: userId! },
-    select: { id: true, slug: true, admin: true },
+    select: {
+      id: true,
+      slug: true,
+      admin: { select: { id: true, username: true } },
+    },
   });
 
   res.success(201, room);
+});
+
+export const deleteRoom = asyncHandler(async (req: Request, res: Response) => {
+  const reqBody = DeleteRoomParamsSchema.safeParse(req.params);
+
+  if (!reqBody.success) {
+    const errorMessage = reqBody.error.message;
+    throw new ApiError(errorMessage, 400);
+  }
+
+  const { roomId } = reqBody.data;
+
+  const room = await prisma.rooms.findUnique({ where: { id: roomId } });
+
+  if (!room) throw new ApiError("No room exists with this room id.", 404);
+
+  await prisma.rooms.delete({ where: { id: roomId } });
+  res.success(200);
 });

@@ -7,7 +7,7 @@ declare global {
     }
 
     interface Response {
-      success: <T>(statusCode: number, data: T) => void;
+      success: <T>(statusCode: number, data?: T) => void;
     }
   }
 }

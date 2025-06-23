@@ -23,3 +23,7 @@ export const CreateRoomRequestBody = z.object({
     .min(3, "Room name must be at least 3 characters.")
     .max(15, "Room name cannot exceed 15 characters."),
 });
+
+export const DeleteRoomParamsSchema = z.object({
+  roomId: z.string().min(3, "Room name must be at least 3 characters."),
+});
