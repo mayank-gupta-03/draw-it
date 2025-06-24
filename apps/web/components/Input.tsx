@@ -3,6 +3,7 @@ import { twMerge } from "tailwind-merge";
 
 interface Props extends InputHTMLAttributes<HTMLInputElement> {
   name: string;
+  value: string;
   label?: string;
   error?: boolean;
   errorMessage?: string;
@@ -10,6 +11,7 @@ interface Props extends InputHTMLAttributes<HTMLInputElement> {
 
 const Input = ({
   name,
+  value,
   label,
   error,
   errorMessage,
@@ -23,7 +25,13 @@ const Input = ({
       <label htmlFor={name} className="text-lg font-semibold">
         {label}
       </label>
-      <input type="text" className={twMerge(baseStyles, className)} {...rest} />
+      <input
+        type="text"
+        name={name}
+        value={value}
+        className={twMerge(baseStyles, className)}
+        {...rest}
+      />
       <span className="text-red-500 text-xs">{error && errorMessage}</span>
     </div>
   );
