@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import asyncHandler from "../utils/asyncHandler.util";
 import {
-  CreateRoomRequestBody,
+  CreateRoomRequestSchema,
   DeleteRoomParamsSchema,
   GetRoomRequestSchema,
 } from "@repo/common/api-types";
@@ -9,7 +9,7 @@ import ApiError from "../utils/ApiError.util";
 import { prisma } from "@repo/db/client";
 
 export const createRoom = asyncHandler(async (req: Request, res: Response) => {
-  const reqBody = CreateRoomRequestBody.safeParse(req.body);
+  const reqBody = CreateRoomRequestSchema.safeParse(req.body);
 
   if (!reqBody.success) {
     const errorMessage = reqBody.error.message;

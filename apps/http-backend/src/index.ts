@@ -19,6 +19,6 @@ app.use(`${API_BASE_URL}/rooms`, roomRoutes);
 app.use(`${API_BASE_URL}/chats`, chatRoutes);
 app.use(handleError);
 
-const PORT = process.env.PORT || 8000;
+const PORT = process.env.PORT || 4000;
 
 app.listen(PORT, () => console.log("App is listening on PORT: ", PORT));

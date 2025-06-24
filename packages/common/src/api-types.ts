@@ -1,40 +1,61 @@
 import { z } from "zod";
 
-export const LoginUserRequestBody = z.object({
+export const LoginUserRequestSchema = z.object({
   username: z
     .string()
-    .min(3, "Username must be at least 3 characters.")
-    .max(15, "Username cannot exceed 15 characters."),
-  password: z.string().min(6, "Password must be at least 6 characters."),
+    .min(3, "Too short (min 3 characters)")
+    .max(15, "Too long (max 15 characters)"),
+  password: z.string().min(6, "Too short (min 6 characters)"),
 });
 
-export const CreateUserRequestBody = z.object({
+export type LoginUserRequestSchema = z.infer<typeof LoginUserRequestSchema>;
+
+export const CreateUserRequestSchema = z.object({
   username: z
     .string()
-    .min(3, "Username must be at least 3 characters.")
-    .max(15, "Username cannot exceed 15 characters."),
-  password: z.string().min(6, "Password must be at least 6 characters."),
+    .min(3, "Too short (min 3 characters)")
+    .max(15, "Too long (max 15 characters)"),
+  password: z.string().min(6, "Too short (min 6 characters)"),
   name: z.string(),
 });
 
-export const CreateRoomRequestBody = z.object({
+export type CreateUserRequestBody = z.infer<typeof CreateUserRequestSchema>;
+
+export const CreateRoomRequestSchema = z.object({
   slug: z
     .string()
-    .min(3, "Room name must be at least 3 characters.")
-    .max(15, "Room name cannot exceed 15 characters."),
+    .min(3, "Too short (min 3 characters)")
+    .max(15, "Too long (max 15 characters)"),
 });
+
+export type CreateRoomRequestBody = z.infer<typeof CreateRoomRequestSchema>;
 
 export const DeleteRoomParamsSchema = z.object({
-  roomId: z.string().min(3, "Room name must be at least 3 characters."),
+  roomId: z.string().min(3, "Too short (min 3 characters)"),
 });
 
+export type DeleteRoomParamsBody = z.infer<typeof DeleteRoomParamsSchema>;
+
 export const GetChatsParamsSchema = z.object({
-  roomId: z.string().min(3, "Room name must be at least 3 characters."),
+  roomId: z.string().min(3, "Too short (min 3 characters)"),
 });
+
+export type GetChatsParamsBody = z.infer<typeof GetChatsParamsSchema>;
 
 export const GetRoomRequestSchema = z.object({
   slug: z
     .string()
-    .min(3, "Room name must be at least 3 characters.")
-    .max(15, "Room name cannot exceed 15 characters."),
+    .min(3, "Too short (min 3 characters)")
+    .max(15, "Too long (max 15 characters)"),
 });
+
+export type GetRoomRequestBody = z.infer<typeof GetRoomRequestSchema>;
+
+export interface CreateRoomResponseBody {
+  id: string;
+  slug: string;
+  admin: {
+    id: string;
+    username: string;
+  };
+}

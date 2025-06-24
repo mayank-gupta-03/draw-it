@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
 import asyncHandler from "../utils/asyncHandler.util";
 import {
-  CreateUserRequestBody,
-  LoginUserRequestBody,
+  CreateUserRequestSchema,
+  LoginUserRequestSchema,
 } from "@repo/common/api-types";
 import jwt from "jsonwebtoken";
 import ApiError from "../utils/ApiError.util";
@@ -16,7 +16,7 @@ export const loginUser = asyncHandler(async (req: Request, res: Response) => {
       "[ERROR] FATAL: JWT_SECRET was not provided in the environment variables."
     );
 
-  const reqBody = LoginUserRequestBody.safeParse(req.body);
+  const reqBody = LoginUserRequestSchema.safeParse(req.body);
 
   if (!reqBody.success) {
     const errorMessage = reqBody.error.message;
@@ -43,7 +43,7 @@ export const createUser = asyncHandler(async (req: Request, res: Response) => {
       "[ERROR] FATAL: JWT_SECRET was not provided in the environment variables."
     );
 
-  const reqBody = CreateUserRequestBody.safeParse(req.body);
+  const reqBody = CreateUserRequestSchema.safeParse(req.body);
 
   if (!reqBody.success) {
     const errorMessage = reqBody.error.message;
