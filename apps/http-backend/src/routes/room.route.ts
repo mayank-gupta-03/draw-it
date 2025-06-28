@@ -8,8 +8,8 @@ import {
 
 const router: Router = Router();
 
-router.post("/", verifyToken, createRoom);
-router.post("/", verifyToken, getRoomBySlug);
+router.post("/create", verifyToken, createRoom);
+router.post("/get", verifyToken, getRoomBySlug);
 router.delete("/:roomId", verifyToken, deleteRoom);
 
 export default router;

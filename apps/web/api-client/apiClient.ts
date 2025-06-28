@@ -1,7 +1,15 @@
-import { CreateRoomRequestBody } from "@repo/common/api-types";
+import {
+  CreateRoomRequestBody,
+  GetRoomRequestBody,
+} from "@repo/common/api-types";
 import axiosInstance from "./axiosInstance";
 
-export const createRoom = async (slug: CreateRoomRequestBody) => {
-  const response = await axiosInstance.post("/rooms", slug);
+export const createRoom = async (body: CreateRoomRequestBody) => {
+  const response = await axiosInstance.post("/rooms/create", body);
+  return response.data;
+};
+
+export const joinRoom = async (body: GetRoomRequestBody) => {
+  const response = await axiosInstance.post("/rooms/get", body);
   return response.data;
 };
