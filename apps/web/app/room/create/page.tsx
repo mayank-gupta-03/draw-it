@@ -67,7 +67,7 @@ const CreateRoom = () => {
         >
           <div className="flex items-center justify-center shadow-xl border border-gray-100 bg-white opacity-80 rounded-xl w-80 h-96">
             {isLoading ? (
-              <Spinner height={100} width={100} />
+              <Spinner size="lg" />
             ) : (
               <div className="flex flex-col gap-8">
                 <Input
