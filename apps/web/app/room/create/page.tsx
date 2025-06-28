@@ -1,7 +1,7 @@
 "use client";
 
 import { useMutation } from "@tanstack/react-query";
-import React, { useState } from "react";
+import React, { useRef } from "react";
 import { createRoom, joinRoom } from "../../../api-client/apiClient";
 import { Input, Button } from "../../../components";
 import { Formik } from "formik";
@@ -15,7 +15,7 @@ import { toFormikValidationSchema } from "zod-formik-adapter";
 import { useRouter } from "next/navigation";
 
 const CreateRoom = () => {
-  const [action, setAction] = useState<"create" | "join" | null>(null);
+  const action = useRef<"create" | "join" | null>(null);
   const router = useRouter();
 
   const { mutate: createMutation, isPending: isCreating } = useMutation({
@@ -37,9 +37,9 @@ const CreateRoom = () => {
   };
 
   const onSubmit = (values: CreateRoomRequestBody) => {
-    if (action === "create") {
+    if (action.current === "create") {
       createMutation(values);
-    } else if (action === "join") {
+    } else if (action.current === "join") {
       joinMutation(values);
     }
   };
@@ -79,7 +79,7 @@ const CreateRoom = () => {
             <div className="flex flex-col gap-4">
               <Button
                 type="submit"
-                onClick={() => setAction("create")}
+                onClick={() => (action.current = "create")}
                 variant="primary"
                 disabled={isLoading}
               >
@@ -87,7 +87,7 @@ const CreateRoom = () => {
               </Button>
               <Button
                 type="submit"
-                onClick={() => setAction("join")}
+                onClick={() => (action.current = "join")}
                 variant="outline"
                 disabled={isLoading}
               >
