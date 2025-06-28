@@ -69,7 +69,11 @@ export const getRoomBySlug = asyncHandler(
 
     const room = await prisma.rooms.findUnique({
       where: { slug },
-      select: { id: true, slug: true },
+      select: {
+        id: true,
+        slug: true,
+        admin: { select: { id: true, username: true } },
+      },
     });
 
     if (!room) throw new ApiError("No room exists with this slug.", 404);

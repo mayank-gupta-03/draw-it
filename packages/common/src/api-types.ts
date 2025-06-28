@@ -52,10 +52,25 @@ export const GetRoomRequestSchema = z.object({
 export type GetRoomRequestBody = z.infer<typeof GetRoomRequestSchema>;
 
 export interface CreateRoomResponseBody {
-  id: string;
-  slug: string;
-  admin: {
+  success: boolean;
+  data: {
     id: string;
-    username: string;
+    slug: string;
+    admin: {
+      id: string;
+      username: string;
+    };
+  };
+}
+
+export interface JoinRoomResponseBody {
+  success: boolean;
+  data: {
+    id: string;
+    slug: string;
+    admin: {
+      id: string;
+      username: string;
+    };
   };
 }
