@@ -3,7 +3,7 @@
 import { useMutation } from "@tanstack/react-query";
 import React from "react";
 import { createRoom } from "../../../api-client/apiClient";
-import { Input, Button } from "@repo/ui";
+import { Input, Button } from "../../../components";
 import { Formik } from "formik";
 import {
   CreateRoomRequestBody,
