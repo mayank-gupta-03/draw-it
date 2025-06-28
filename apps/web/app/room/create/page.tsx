@@ -3,7 +3,7 @@
 import { useMutation } from "@tanstack/react-query";
 import React, { useRef } from "react";
 import { createRoom, joinRoom } from "../../../api-client/apiClient";
-import { Input, Button } from "../../../components";
+import { Input, Button, Spinner } from "../../../components";
 import { Formik } from "formik";
 import {
   CreateRoomRequestBody,
@@ -65,35 +65,39 @@ const CreateRoom = () => {
           className="w-screen h-screen flex flex-col items-center justify-center border-1 bg-slate-900"
           aria-label="Create room form"
         >
-          <div className="flex flex-col gap-8 shadow-xl py-32 px-14 border border-gray-100 bg-white opacity-80 rounded-xl">
-            <Input
-              name="slug"
-              label="Room name"
-              placeholder="Enter room name"
-              value={values.slug}
-              onChange={handleChange}
-              onBlur={handleBlur}
-              error={!!(errors.slug && touched.slug)}
-              errorMessage={errors.slug}
-            />
-            <div className="flex flex-col gap-4">
-              <Button
-                type="submit"
-                onClick={() => (action.current = "create")}
-                variant="primary"
-                disabled={isLoading}
-              >
-                Create
-              </Button>
-              <Button
-                type="submit"
-                onClick={() => (action.current = "join")}
-                variant="outline"
-                disabled={isLoading}
-              >
-                Join
-              </Button>
-            </div>
+          <div className="flex items-center justify-center shadow-xl border border-gray-100 bg-white opacity-80 rounded-xl w-80 h-96">
+            {isLoading ? (
+              <Spinner height={100} width={100} />
+            ) : (
+              <div className="flex flex-col gap-8">
+                <Input
+                  name="slug"
+                  label="Room name"
+                  placeholder="Enter room name"
+                  value={values.slug}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  error={!!(errors.slug && touched.slug)}
+                  errorMessage={errors.slug}
+                />
+                <div className="w-full flex flex-col gap-4">
+                  <Button
+                    type="submit"
+                    onClick={() => (action.current = "create")}
+                    variant="primary"
+                  >
+                    Create
+                  </Button>
+                  <Button
+                    type="submit"
+                    onClick={() => (action.current = "join")}
+                    variant="outline"
+                  >
+                    Join
+                  </Button>
+                </div>
+              </div>
+            )}
           </div>
         </form>
       )}

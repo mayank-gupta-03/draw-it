@@ -17,7 +17,7 @@ const Button = ({
   ...rest
 }: Button) => {
   const baseStyles: string =
-    "cursor-pointer px-4 py-2 transition-all rounded font-medium".trim();
+    "w-full cursor-pointer px-4 py-2 transition-all rounded font-medium".trim();
   const disabledStyles: string =
     "cursor-not-allowed opacity-50 pointer-events-none flex items-center justify-center";
   const variantStyles: Record<Variant, string> = {
