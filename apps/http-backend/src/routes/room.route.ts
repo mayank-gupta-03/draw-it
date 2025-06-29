@@ -9,7 +9,7 @@ import {
 const router: Router = Router();
 
 router.post("/create", verifyToken, createRoom);
-router.post("/get", verifyToken, getRoomBySlug);
+router.get("/:slug", verifyToken, getRoomBySlug);
 router.delete("/:roomId", verifyToken, deleteRoom);
 
 export default router;

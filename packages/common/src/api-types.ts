@@ -42,14 +42,14 @@ export const GetChatsParamsSchema = z.object({
 
 export type GetChatsParamsBody = z.infer<typeof GetChatsParamsSchema>;
 
-export const GetRoomRequestSchema = z.object({
+export const GetRoomParamsSchema = z.object({
   slug: z
     .string()
     .min(3, "Too short (min 3 characters)")
     .max(15, "Too long (max 15 characters)"),
 });
 
-export type GetRoomRequestBody = z.infer<typeof GetRoomRequestSchema>;
+export type GetRoomParamsBody = z.infer<typeof GetRoomParamsSchema>;
 
 interface BaseResponseBody {
   success: boolean;
@@ -86,4 +86,17 @@ export interface Chats {
 }
 export interface GetChatsResponseBody extends BaseResponseBody {
   data: Chats[];
+}
+
+export interface UserLoginResponseBody extends BaseResponseBody {
+  data: {
+    token: string;
+  };
+}
+
+export interface RegisterUserResponseBody extends BaseResponseBody {
+  data: {
+    username: string;
+    name: string;
+  };
 }

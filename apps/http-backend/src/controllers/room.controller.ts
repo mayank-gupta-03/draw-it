@@ -3,7 +3,7 @@ import asyncHandler from "../utils/asyncHandler.util";
 import {
   CreateRoomRequestSchema,
   DeleteRoomParamsSchema,
-  GetRoomRequestSchema,
+  GetRoomParamsSchema,
 } from "@repo/common/api-types";
 import ApiError from "../utils/ApiError.util";
 import { prisma } from "@repo/db/client";
@@ -18,13 +18,19 @@ export const createRoom = asyncHandler(async (req: Request, res: Response) => {
 
   const { slug } = reqBody.data;
   const userId = req.userId;
-  const existingRoom = await prisma.rooms.findUnique({ where: { slug } });
+  const existingRoom = await prisma.rooms.findUnique({
+    where: { slug },
+    select: {
+      id: true,
+      slug: true,
+      admin: { select: { id: true, username: true } },
+    },
+  });
 
-  if (existingRoom)
-    throw new ApiError(
-      "A room with same name already exists. Please use another name.",
-      409
-    );
+  if (existingRoom) {
+    res.success(200, existingRoom);
+    return;
+  }
 
   const room = await prisma.rooms.create({
     data: { slug, adminId: userId! },
@@ -58,14 +64,14 @@ export const deleteRoom = asyncHandler(async (req: Request, res: Response) => {
 
 export const getRoomBySlug = asyncHandler(
   async (req: Request, res: Response) => {
-    const reqBody = GetRoomRequestSchema.safeParse(req.body);
+    const reqParams = GetRoomParamsSchema.safeParse(req.params);
 
-    if (!reqBody.success) {
-      const errorMessage = reqBody.error.message;
+    if (!reqParams.success) {
+      const errorMessage = reqParams.error.message;
       throw new ApiError(errorMessage, 400);
     }
 
-    const { slug } = reqBody.data;
+    const { slug } = reqParams.data;
 
     const room = await prisma.rooms.findUnique({
       where: { slug },
