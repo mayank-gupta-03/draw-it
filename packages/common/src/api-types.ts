@@ -88,7 +88,7 @@ export interface GetChatsResponseBody extends BaseResponseBody {
   data: Chats[];
 }
 
-export interface UserLoginResponseBody extends BaseResponseBody {
+export interface LoginUserResponseBody extends BaseResponseBody {
   data: {
     token: string;
   };
