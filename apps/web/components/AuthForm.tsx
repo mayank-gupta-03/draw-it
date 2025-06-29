@@ -62,11 +62,14 @@ const AuthForm = ({ mode }: Props) => {
         const signupErrors = errors as FormikErrors<CreateUserRequestBody>;
         const signupTouched = errors as FormikTouched<CreateUserRequestBody>;
         return (
-          <Form
-            onSubmit={handleSubmit}
-            className="flex items-center justify-center h-screen"
-          >
-            <div className="shadow-xl rounded-xl w-80 h-96 p-8 flex flex-col items-stretch justify-center bg-white/80">
+          <div className="border-4 h-full flex items-center justify-center">
+            <Form
+              onSubmit={handleSubmit}
+              className="w-80 bg-white/80 p-8 rounded-xl shadow-2xl"
+            >
+              <h1 className="text-2xl font-semibold">
+                {isSignup ? "Signup" : "Signin"}
+              </h1>
               {isSignup && (
                 <Input
                   name="name"
@@ -77,6 +80,7 @@ const AuthForm = ({ mode }: Props) => {
                   onChange={handleChange}
                   onBlur={handleBlur}
                   value={signupValues.name}
+                  disabled={isLoading}
                 />
               )}
               <Input
@@ -88,21 +92,24 @@ const AuthForm = ({ mode }: Props) => {
                 onChange={handleChange}
                 onBlur={handleBlur}
                 value={values.username}
+                disabled={isLoading}
               />
               <Input
                 name="password"
+                type="password"
                 label="Password"
                 error={!!(errors.password && touched.password)}
                 errorMessage={errors.password}
                 onChange={handleChange}
                 onBlur={handleBlur}
                 value={values.password}
+                disabled={isLoading}
               />
               <Button variant="primary" isLoading={isLoading}>
                 {isSignup ? "Signup" : "Signin"}
               </Button>
-            </div>
-          </Form>
+            </Form>
+          </div>
         );
       }}
     </Formik>

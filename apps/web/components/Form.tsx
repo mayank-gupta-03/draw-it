@@ -6,7 +6,7 @@ interface Props extends FormHTMLAttributes<HTMLFormElement> {
 }
 
 const Form = ({ children, className, ...rest }: Props) => {
-  const baseStyles = "w-full space-y-1";
+  const baseStyles = "w-full space-y-2";
   return (
     <form className={twMerge(baseStyles, className)} {...rest}>
       {children}
