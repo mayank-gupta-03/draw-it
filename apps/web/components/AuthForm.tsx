@@ -14,6 +14,8 @@ import Button from "./Button";
 import { toFormikValidationSchema } from "zod-formik-adapter";
 import { useCreateUser, useLoginUser } from "../hooks/useApi";
 import { useRouter } from "next/navigation";
+import toast, { useToaster } from "react-hot-toast";
+import { AxiosError } from "axios";
 
 interface Props {
   mode: "signin" | "signup";
@@ -22,7 +24,6 @@ interface Props {
 const AuthForm = ({ mode }: Props) => {
   const isSignup = mode === "signup";
 
-  const router = useRouter();
   const { mutate: createUser, isPending: isCreating } = useCreateUser();
   const { mutate: loginUser, isPending: isLogging } = useLoginUser();
 
@@ -35,13 +36,9 @@ const AuthForm = ({ mode }: Props) => {
 
   const handleSubmit = (values: typeof initialValues) => {
     if (isSignup) {
-      createUser(values as CreateUserRequestBody, {
-        onSuccess: () => router.push("/"),
-      });
+      createUser(values as CreateUserRequestBody);
     } else {
-      loginUser(values as LoginUserRequestBody, {
-        onSuccess: () => router.push("/"),
-      });
+      loginUser(values as LoginUserRequestBody);
     }
   };
 
