@@ -13,9 +13,6 @@ import Input from "./Input";
 import Button from "./Button";
 import { toFormikValidationSchema } from "zod-formik-adapter";
 import { useCreateUser, useLoginUser } from "../hooks/useApi";
-import { useRouter } from "next/navigation";
-import toast, { useToaster } from "react-hot-toast";
-import { AxiosError } from "axios";
 
 interface Props {
   mode: "signin" | "signup";
@@ -65,41 +62,46 @@ const AuthForm = ({ mode }: Props) => {
         const signupErrors = errors as FormikErrors<CreateUserRequestBody>;
         const signupTouched = errors as FormikTouched<CreateUserRequestBody>;
         return (
-          <Form onSubmit={handleSubmit}>
-            {isSignup && (
+          <Form
+            onSubmit={handleSubmit}
+            className="flex items-center justify-center h-screen"
+          >
+            <div className="shadow-xl rounded-xl w-80 h-96 p-8 flex flex-col items-stretch justify-center bg-white/80">
+              {isSignup && (
+                <Input
+                  name="name"
+                  label="Name"
+                  placeholder="John Doe"
+                  error={!!(signupErrors.name && signupTouched.name)}
+                  errorMessage={signupErrors.name}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={signupValues.name}
+                />
+              )}
               <Input
-                name="name"
-                label="Name"
-                placeholder="John Doe"
-                error={!!(signupErrors.name && signupTouched.name)}
-                errorMessage={signupErrors.name}
+                name="username"
+                label="Username"
+                placeholder="john-doe-12"
+                error={!!(errors.username && touched.username)}
+                errorMessage={errors.username}
                 onChange={handleChange}
                 onBlur={handleBlur}
-                value={signupValues.name}
+                value={values.username}
               />
-            )}
-            <Input
-              name="username"
-              label="Username"
-              placeholder="john-doe-12"
-              error={!!(errors.username && touched.username)}
-              errorMessage={errors.username}
-              onChange={handleChange}
-              onBlur={handleBlur}
-              value={values.username}
-            />
-            <Input
-              name="password"
-              label="Password"
-              error={!!(errors.password && touched.password)}
-              errorMessage={errors.password}
-              onChange={handleChange}
-              onBlur={handleBlur}
-              value={values.password}
-            />
-            <Button variant="primary" isLoading={isLoading}>
-              {isSignup ? "Signup" : "Signin"}
-            </Button>
+              <Input
+                name="password"
+                label="Password"
+                error={!!(errors.password && touched.password)}
+                errorMessage={errors.password}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                value={values.password}
+              />
+              <Button variant="primary" isLoading={isLoading}>
+                {isSignup ? "Signup" : "Signin"}
+              </Button>
+            </div>
           </Form>
         );
       }}

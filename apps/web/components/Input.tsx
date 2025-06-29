@@ -21,7 +21,7 @@ const Input = ({
     "w-full border border-slate-900/40 rounded-md p-2 outline-none focus:ring focus:ring-slate-900 transition";
   return (
     <div className="flex flex-col gap-1">
-      <div>
+      <div className="flex flex-col">
         <label htmlFor={name} className="text-md">
           {label}
           {required && <span className="text-md text-red-500  ml-1">*</span>}
