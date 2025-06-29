@@ -20,14 +20,18 @@ const CreateRoom = () => {
 
   const { mutate: createMutation, isPending: isCreating } = useMutation({
     mutationFn: createRoom,
-    onSuccess: (values: CreateRoomResponseBody) =>
-      router.push(`${values.data.slug}`),
+    onSuccess: (values: CreateRoomResponseBody) => {
+      router.push(`${values.data.slug}`);
+      sessionStorage.setItem("roomId", values.data.id);
+    },
   });
 
   const { mutate: joinMutation, isPending: isJoining } = useMutation({
     mutationFn: joinRoom,
-    onSuccess: (values: CreateRoomResponseBody) =>
-      router.push(`${values.data.slug}`),
+    onSuccess: (values: CreateRoomResponseBody) => {
+      router.push(`${values.data.slug}`);
+      sessionStorage.setItem("roomId", values.data.id);
+    },
   });
 
   const isLoading = isCreating || isJoining;

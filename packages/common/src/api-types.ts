@@ -51,8 +51,11 @@ export const GetRoomRequestSchema = z.object({
 
 export type GetRoomRequestBody = z.infer<typeof GetRoomRequestSchema>;
 
-export interface CreateRoomResponseBody {
+interface BaseResponseBody {
   success: boolean;
+}
+
+export interface CreateRoomResponseBody extends BaseResponseBody {
   data: {
     id: string;
     slug: string;
@@ -63,8 +66,7 @@ export interface CreateRoomResponseBody {
   };
 }
 
-export interface JoinRoomResponseBody {
-  success: boolean;
+export interface JoinRoomResponseBody extends BaseResponseBody {
   data: {
     id: string;
     slug: string;
@@ -73,4 +75,15 @@ export interface JoinRoomResponseBody {
       username: string;
     };
   };
+}
+
+export interface Chats {
+  message: string;
+  user: {
+    id: string;
+    username: string;
+  };
+}
+export interface GetChatsResponseBody extends BaseResponseBody {
+  data: Chats[];
 }
