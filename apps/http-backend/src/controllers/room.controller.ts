@@ -8,7 +8,7 @@ import {
 import ApiError from "../utils/ApiError.util";
 import { prisma } from "@repo/db/client";
 
-export const createRoom = asyncHandler(async (req: Request, res: Response) => {
+export const joinRoom = asyncHandler(async (req: Request, res: Response) => {
   const reqBody = CreateRoomRequestSchema.safeParse(req.body);
 
   if (!reqBody.success) {
