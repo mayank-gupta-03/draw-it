@@ -8,7 +8,7 @@ export const LoginUserRequestSchema = z.object({
   password: z.string().min(6, "Too short (min 6 characters)"),
 });
 
-export type LoginUserRequestSchema = z.infer<typeof LoginUserRequestSchema>;
+export type LoginUserRequestBody = z.infer<typeof LoginUserRequestSchema>;
 
 export const CreateUserRequestSchema = z.object({
   username: z
