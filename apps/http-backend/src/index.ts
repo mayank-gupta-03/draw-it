@@ -1,6 +1,7 @@
 import "dotenv/config";
 import express from "express";
 import cors from "cors";
+import cookieParser from "cookie-parser";
 import userRoutes from "./routes/user.route";
 import roomRoutes from "./routes/room.route";
 import chatRoutes from "./routes/chat.route";
@@ -12,6 +13,7 @@ const app = express();
 app.use(cors({ origin: process.env.CORS_ORIGIN || "", credentials: true }));
 app.use(express.json({ limit: "16kb" }));
 app.use(express.urlencoded({ extended: true, limit: "16kb" }));
+app.use(cookieParser());
 
 app.use(responseHandler);
 app.use(`${API_BASE_URL}/users`, userRoutes);

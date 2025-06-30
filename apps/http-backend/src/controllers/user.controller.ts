@@ -34,6 +34,7 @@ export const loginUser = asyncHandler(async (req: Request, res: Response) => {
 
   const token = jwt.sign({ userId: user.id }, JWT_SECRET);
 
+  res.cookie("authToken", token);
   res.success(200, { token });
 });
 

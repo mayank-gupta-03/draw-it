@@ -8,10 +8,7 @@ const verifyToken = (req: Request, res: Response, next: NextFunction) => {
     throw new ApiError(
       "[ERROR] FATAL: JWT_SECRET was not provided in the environment variables."
     );
-  const authHeader = req.headers.authorization;
-  if (!authHeader?.startsWith("Bearer "))
-    throw new ApiError("Authorization header malformed or missing.", 401);
-  const token = authHeader.split(" ")[1];
+  const token = req.cookies["authToken"];
   if (!token) throw new ApiError("Cannot authorize user.", 401);
   const decoded = jwt.verify(token, JWT_SECRET) as JwtPayload;
   if (!decoded.userId) throw new ApiError("Invalid token payload", 401);
