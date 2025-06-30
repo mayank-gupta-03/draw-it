@@ -21,14 +21,14 @@ export const CreateUserRequestSchema = z.object({
 
 export type CreateUserRequestBody = z.infer<typeof CreateUserRequestSchema>;
 
-export const CreateRoomRequestSchema = z.object({
+export const JoinRoomRequestSchema = z.object({
   slug: z
     .string()
     .min(3, "Too short (min 3 characters)")
     .max(15, "Too long (max 15 characters)"),
 });
 
-export type CreateRoomRequestBody = z.infer<typeof CreateRoomRequestSchema>;
+export type JoinRoomRequestBody = z.infer<typeof JoinRoomRequestSchema>;
 
 export const DeleteRoomParamsSchema = z.object({
   roomId: z.string().min(3, "Too short (min 3 characters)"),
@@ -66,7 +66,7 @@ export interface CreateRoomResponseBody extends BaseResponseBody {
   };
 }
 
-export interface JoinRoomResponseBody extends BaseResponseBody {
+export interface GetRoomResponseBody extends BaseResponseBody {
   data: {
     id: string;
     slug: string;
@@ -98,5 +98,16 @@ export interface RegisterUserResponseBody extends BaseResponseBody {
   data: {
     username: string;
     name: string;
+  };
+}
+
+export interface JoinRoomResponseBody extends BaseResponseBody {
+  data: {
+    id: string;
+    slug: string;
+    admin: {
+      id: string;
+      username: string;
+    };
   };
 }

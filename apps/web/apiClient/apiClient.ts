@@ -1,5 +1,7 @@
 import {
   CreateUserRequestBody,
+  JoinRoomRequestBody,
+  JoinRoomResponseBody,
   LoginUserRequestBody,
   LoginUserResponseBody,
   RegisterUserResponseBody,
@@ -17,5 +19,12 @@ export const loginUser = async (
   body: LoginUserRequestBody
 ): Promise<LoginUserResponseBody> => {
   const response = await axiosInstance.post("/users/login", body);
+  return response.data;
+};
+
+export const joinRoom = async (
+  body: JoinRoomRequestBody
+): Promise<JoinRoomResponseBody> => {
+  const response = await axiosInstance.post("/rooms/join", body);
   return response.data;
 };

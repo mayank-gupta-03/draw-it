@@ -13,6 +13,7 @@ import Input from "./Input";
 import Button from "./Button";
 import { toFormikValidationSchema } from "zod-formik-adapter";
 import { useCreateUser, useLoginUser } from "../hooks/useApi";
+import FormContainer from "./FormContainer";
 
 interface Props {
   mode: "signin" | "signup";
@@ -62,11 +63,8 @@ const AuthForm = ({ mode }: Props) => {
         const signupErrors = errors as FormikErrors<CreateUserRequestBody>;
         const signupTouched = errors as FormikTouched<CreateUserRequestBody>;
         return (
-          <div className="border-4 h-full flex items-center justify-center">
-            <Form
-              onSubmit={handleSubmit}
-              className="w-80 bg-white/80 p-8 rounded-xl shadow-2xl"
-            >
+          <FormContainer>
+            <Form onSubmit={handleSubmit}>
               <h1 className="text-2xl font-semibold">
                 {isSignup ? "Signup" : "Signin"}
               </h1>
@@ -109,7 +107,7 @@ const AuthForm = ({ mode }: Props) => {
                 {isSignup ? "Signup" : "Signin"}
               </Button>
             </Form>
-          </div>
+          </FormContainer>
         );
       }}
     </Formik>

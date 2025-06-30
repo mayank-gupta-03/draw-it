@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import asyncHandler from "../utils/asyncHandler.util";
 import {
-  CreateRoomRequestSchema,
+  JoinRoomRequestSchema,
   DeleteRoomParamsSchema,
   GetRoomParamsSchema,
 } from "@repo/common/api-types";
@@ -9,7 +9,7 @@ import ApiError from "../utils/ApiError.util";
 import { prisma } from "@repo/db/client";
 
 export const joinRoom = asyncHandler(async (req: Request, res: Response) => {
-  const reqBody = CreateRoomRequestSchema.safeParse(req.body);
+  const reqBody = JoinRoomRequestSchema.safeParse(req.body);
 
   if (!reqBody.success) {
     const errorMessage = reqBody.error.message;

@@ -8,7 +8,7 @@ import {
 
 const router: Router = Router();
 
-router.post("/create", verifyToken, joinRoom);
+router.post("/join", verifyToken, joinRoom);
 router.get("/:slug", verifyToken, getRoomBySlug);
 router.delete("/:roomId", verifyToken, deleteRoom);
 
