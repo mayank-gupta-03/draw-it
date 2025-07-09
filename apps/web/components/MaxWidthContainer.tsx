@@ -5,7 +5,11 @@ interface Props {
 }
 
 const MaxWidthContainer = ({ children }: Props) => {
-  return <div className="bg-slate-900 h-screen w-screen px-32">{children}</div>;
+  return (
+    <div className="bg-slate-900 h-screen w-screen px-32 text-white">
+      {children}
+    </div>
+  );
 };
 
 export default MaxWidthContainer;
