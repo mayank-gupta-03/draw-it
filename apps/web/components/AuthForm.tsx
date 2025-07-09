@@ -64,7 +64,7 @@ const AuthForm = ({ mode }: Props) => {
         const signupTouched = errors as FormikTouched<CreateUserRequestBody>;
         return (
           <FormContainer>
-            <Form onSubmit={handleSubmit}>
+            <Form onSubmit={handleSubmit} className="text-black">
               <h1 className="text-2xl font-semibold">
                 {isSignup ? "Signup" : "Signin"}
               </h1>
