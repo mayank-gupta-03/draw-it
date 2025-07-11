@@ -100,7 +100,13 @@ wss.on("connection", function connection(ws, request) {
 
         users.forEach((user) => {
           if (user.rooms.includes(roomId)) {
-            user.socket.send(message as string);
+            user.socket.send(
+              JSON.stringify({
+                type: "CHAT",
+                message,
+                roomId,
+              })
+            );
           }
         });
       } catch (err) {
