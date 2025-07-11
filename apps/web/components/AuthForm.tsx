@@ -41,7 +41,7 @@ const AuthForm = ({ mode }: Props) => {
       createUser(values as CreateUserRequestBody, {
         onSuccess: () => {
           toast.success("Logged in successfully.");
-          router.push("/room/join");
+          router.push("/canvas/join");
         },
         onError: (error) => {
           if (axios.isAxiosError(error)) {
@@ -56,7 +56,7 @@ const AuthForm = ({ mode }: Props) => {
       loginUser(values as LoginUserRequestBody, {
         onSuccess: () => {
           toast.success("Logged in successfully.");
-          router.push("/room/join");
+          router.push("/canvas/join");
         },
         onError: (error) => {
           if (axios.isAxiosError(error)) {

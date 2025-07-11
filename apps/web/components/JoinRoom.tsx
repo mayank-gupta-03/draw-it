@@ -28,7 +28,7 @@ const JoinRoom = () => {
     joinRoom(values, {
       onSuccess: (response) => {
         toast.success(`Successfully joined ${response.data.slug}`);
-        router.push(`${response.data.slug}/chat`);
+        router.push(`${response.data.slug}`);
       },
       onError: (error) => {
         if (axios.isAxiosError(error)) {
