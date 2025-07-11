@@ -12,14 +12,15 @@ interface Props {
   };
 }
 const ChatRoom = async ({ params }: Props) => {
+  const { slug } = await params;
   const queryClient = new QueryClient();
   await queryClient.prefetchQuery({
-    queryKey: ["room", params.slug],
-    queryFn: () => getRoom(params.slug),
+    queryKey: ["room", slug],
+    queryFn: () => getRoom(slug),
   });
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
-      <Chat slug={params.slug} />
+      <Chat slug={slug} />
     </HydrationBoundary>
   );
 };

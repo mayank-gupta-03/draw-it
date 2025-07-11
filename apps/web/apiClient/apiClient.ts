@@ -1,5 +1,6 @@
 import {
   CreateUserRequestBody,
+  GetChatsResponseBody,
   GetRoomResponseBody,
   JoinRoomRequestBody,
   JoinRoomResponseBody,
@@ -35,7 +36,9 @@ export const getRoom = async (slug: string): Promise<GetRoomResponseBody> => {
   return response.data;
 };
 
-export const getChats = async (roomId: string) => {
+export const getChats = async (
+  roomId: string
+): Promise<GetChatsResponseBody> => {
   const response = await axiosInstance.get(`/chats/${roomId}`);
   return response.data;
 };
