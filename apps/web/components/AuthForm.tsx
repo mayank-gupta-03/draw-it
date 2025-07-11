@@ -12,8 +12,11 @@ import Form from "./Form";
 import Input from "./Input";
 import Button from "./Button";
 import { toFormikValidationSchema } from "zod-formik-adapter";
-import { useCreateUser, useLoginUser } from "../hooks/useApi";
+import { useCreateUser, useLoginUser } from "../hooks/useUser";
 import FormContainer from "./FormContainer";
+import toast from "react-hot-toast";
+import axios from "axios";
+import { useRouter } from "next/navigation";
 
 interface Props {
   mode: "signin" | "signup";
@@ -22,6 +25,7 @@ interface Props {
 const AuthForm = ({ mode }: Props) => {
   const isSignup = mode === "signup";
 
+  const router = useRouter();
   const { mutate: createUser, isPending: isCreating } = useCreateUser();
   const { mutate: loginUser, isPending: isLogging } = useLoginUser();
 
@@ -34,9 +38,35 @@ const AuthForm = ({ mode }: Props) => {
 
   const handleSubmit = (values: typeof initialValues) => {
     if (isSignup) {
-      createUser(values as CreateUserRequestBody);
+      createUser(values as CreateUserRequestBody, {
+        onSuccess: () => {
+          toast.success("Logged in successfully.");
+          router.push("/room/join");
+        },
+        onError: (error) => {
+          if (axios.isAxiosError(error)) {
+            const message = error.response?.data.message;
+            toast.error(message);
+          } else {
+            toast.error("Unexpected error occurred.");
+          }
+        },
+      });
     } else {
-      loginUser(values as LoginUserRequestBody);
+      loginUser(values as LoginUserRequestBody, {
+        onSuccess: () => {
+          toast.success("Logged in successfully.");
+          router.push("/room/join");
+        },
+        onError: (error) => {
+          if (axios.isAxiosError(error)) {
+            const message = error.response?.data.message;
+            toast.error(message);
+          } else {
+            toast.error("Unexpected error occurred.");
+          }
+        },
+      });
     }
   };
 

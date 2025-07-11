@@ -9,19 +9,36 @@ import React from "react";
 import { toFormikValidationSchema } from "zod-formik-adapter";
 import Form from "./Form";
 import Input from "./Input";
-import { useJoinRoom } from "../hooks/useApi";
+import { useJoinRoom } from "../hooks/useRoom";
 import Button from "./Button";
 import FormContainer from "./FormContainer";
+import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
+import axios from "axios";
 
 const JoinRoom = () => {
   const { mutate: joinRoom, isPending: isJoining } = useJoinRoom();
+  const router = useRouter();
 
   const initialValues: JoinRoomRequestBody = {
     slug: "",
   };
 
   const handleSubmit = (values: JoinRoomRequestBody) => {
-    joinRoom(values);
+    joinRoom(values, {
+      onSuccess: (response) => {
+        toast.success(`Successfully joined ${response.data.slug}`);
+        router.push(`${response.data.slug}/chat`);
+      },
+      onError: (error) => {
+        if (axios.isAxiosError(error)) {
+          const message = error.response?.data.message;
+          toast.error(message);
+        } else {
+          toast.error("Unexpected error occurred.");
+        }
+      },
+    });
   };
 
   const validationSchema = toFormikValidationSchema(JoinRoomRequestSchema);
@@ -43,7 +60,7 @@ const JoinRoom = () => {
         handleSubmit,
       }) => (
         <FormContainer>
-          <Form onSubmit={handleSubmit}>
+          <Form onSubmit={handleSubmit} className="text-black">
             <h1 className="text-2xl font-semibold">Join a room</h1>
             <Input
               name="slug"
