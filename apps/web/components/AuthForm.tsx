@@ -94,14 +94,18 @@ const AuthForm = ({ mode }: Props) => {
         const signupTouched = errors as FormikTouched<CreateUserRequestBody>;
         return (
           <FormContainer>
-            <Form onSubmit={handleSubmit} className="text-black">
-              <h1 className="text-2xl font-semibold">
-                {isSignup ? "Signup" : "Signin"}
+            <Form
+              onSubmit={handleSubmit}
+              className="text-gray-800 px-8 py-10 space-y-6 bg-white rounded-2xl shadow-xl"
+            >
+              <h1 className="text-3xl font-extrabold text-center text-indigo-600 tracking-tight mb-6">
+                {isSignup ? "Create an Account" : "Welcome Back"}
               </h1>
+
               {isSignup && (
                 <Input
                   name="name"
-                  label="Name"
+                  label="Full Name"
                   placeholder="John Doe"
                   error={!!(signupErrors.name && signupTouched.name)}
                   errorMessage={signupErrors.name}
@@ -111,6 +115,7 @@ const AuthForm = ({ mode }: Props) => {
                   disabled={isLoading}
                 />
               )}
+
               <Input
                 name="username"
                 label="Username"
@@ -122,10 +127,12 @@ const AuthForm = ({ mode }: Props) => {
                 value={values.username}
                 disabled={isLoading}
               />
+
               <Input
                 name="password"
                 type="password"
                 label="Password"
+                placeholder="••••••••"
                 error={!!(errors.password && touched.password)}
                 errorMessage={errors.password}
                 onChange={handleChange}
@@ -133,8 +140,13 @@ const AuthForm = ({ mode }: Props) => {
                 value={values.password}
                 disabled={isLoading}
               />
-              <Button variant="primary" isLoading={isLoading}>
-                {isSignup ? "Signup" : "Signin"}
+
+              <Button
+                variant="primary"
+                isLoading={isLoading}
+                className="w-full mt-4 text-lg font-medium rounded-xl py-3"
+              >
+                {isSignup ? "Create Account" : "Sign In"}
               </Button>
             </Form>
           </FormContainer>

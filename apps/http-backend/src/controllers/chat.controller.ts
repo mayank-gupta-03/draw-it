@@ -17,7 +17,7 @@ export const getChatsByRoomId = asyncHandler(
 
     const chats = await prisma.chats.findMany({
       where: { roomId },
-      select: { message: true, user: { select: { id: true, username: true } } },
+      select: { message: true },
       take: 50,
       orderBy: { id: "desc" },
     });

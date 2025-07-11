@@ -6,6 +6,7 @@ interface Props extends InputHTMLAttributes<HTMLInputElement> {
   error?: boolean;
   errorMessage?: string;
   label?: string;
+  ref?: React.Ref<HTMLInputElement> | null;
 }
 
 const Input = ({
@@ -15,32 +16,41 @@ const Input = ({
   className,
   label,
   required = false,
+  ref,
   ...rest
 }: Props) => {
   const baseStyles =
-    "w-full border border-slate-900/40 rounded-md p-2 outline-none focus:ring focus:ring-slate-900 transition";
+    "w-full border rounded-xl px-4 py-2 text-sm shadow-sm transition focus:outline-none focus:ring-2 focus:ring-indigo-500";
+
+  const errorStyles = "border-red-500 focus:ring-red-400";
+
   return (
     <div className="flex flex-col gap-1">
-      <div className="flex flex-col">
-        <label htmlFor={name} className="text-md">
+      {label && (
+        <label
+          htmlFor={name}
+          className="text-sm font-medium text-gray-700 mb-1"
+        >
           {label}
-          {required && <span className="text-md text-red-500  ml-1">*</span>}
+          {required && <span className="text-red-500 ml-1">*</span>}
         </label>
-        <input
-          type="text"
-          name={name}
-          className={twMerge(baseStyles, className)}
-          id={name}
-          {...rest}
-        />
-      </div>
+      )}
+      <input
+        type="text"
+        name={name}
+        id={name}
+        className={twMerge(baseStyles, error && errorStyles, className)}
+        ref={ref}
+        aria-invalid={error}
+        {...rest}
+      />
       <span
         className={twMerge(
-          "text-xs text-red-500 min-h-[1rem]",
-          error ? "visible" : "invisible"
+          "text-xs min-h-[1rem] mt-1 transition",
+          error ? "text-red-500" : "text-transparent"
         )}
       >
-        {errorMessage}
+        {errorMessage || "Placeholder error"}
       </span>
     </div>
   );

@@ -6,8 +6,8 @@ interface Props {
 
 const MaxWidthContainer = ({ children }: Props) => {
   return (
-    <div className="bg-slate-900 h-screen w-screen px-32 text-white">
-      {children}
+    <div className="min-h-screen w-full bg-gradient-to-b from-slate-950 to-slate-900 text-white">
+      <div className="max-w-6xl mx-auto px-6 py-10">{children}</div>
     </div>
   );
 };

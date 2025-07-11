@@ -7,8 +7,8 @@ interface Props {
 
 const FormContainer = ({ children }: Props) => {
   return (
-    <div className="h-full flex items-center justify-center">
-      <div className="w-80 bg-white/80 p-8 rounded-xl shadow-2xl">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-950 to-slate-900 px-4">
+      <div className="w-full max-w-md bg-white rounded-3xl shadow-xl p-10 backdrop-blur-sm border border-white/10">
         {children}
       </div>
     </div>

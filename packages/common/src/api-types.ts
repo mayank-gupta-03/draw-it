@@ -79,10 +79,6 @@ export interface GetRoomResponseBody extends BaseResponseBody {
 
 export interface Chats {
   message: string;
-  user: {
-    id: string;
-    username: string;
-  };
 }
 export interface GetChatsResponseBody extends BaseResponseBody {
   data: Chats[];

@@ -60,12 +60,18 @@ const JoinRoom = () => {
         handleSubmit,
       }) => (
         <FormContainer>
-          <Form onSubmit={handleSubmit} className="text-black">
-            <h1 className="text-2xl font-semibold">Join a room</h1>
+          <Form
+            onSubmit={handleSubmit}
+            className="bg-white text-gray-800 px-8 py-10 space-y-6 rounded-2xl shadow-xl w-full max-w-md"
+          >
+            <h1 className="text-3xl font-bold text-center text-indigo-700 mb-4">
+              Join a Room
+            </h1>
+
             <Input
               name="slug"
-              label="Room name"
-              placeholder="Enter room name"
+              label="Room Name"
+              placeholder="e.g., react-study-group"
               error={!!(errors.slug && touched.slug)}
               errorMessage={errors.slug}
               onChange={handleChange}
@@ -73,8 +79,13 @@ const JoinRoom = () => {
               value={values.slug}
               disabled={isJoining}
             />
-            <Button variant="primary" isLoading={isJoining}>
-              Join
+
+            <Button
+              variant="primary"
+              isLoading={isJoining}
+              className="w-full py-3 text-lg font-medium rounded-xl mt-2"
+            >
+              Join Room
             </Button>
           </Form>
         </FormContainer>
