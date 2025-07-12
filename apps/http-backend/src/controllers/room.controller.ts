@@ -42,6 +42,7 @@ export const joinRoom = asyncHandler(async (req: Request, res: Response) => {
   });
 
   res.success(201, room);
+  return;
 });
 
 export const deleteRoom = asyncHandler(async (req: Request, res: Response) => {
